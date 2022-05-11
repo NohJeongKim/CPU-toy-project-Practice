@@ -114,14 +114,73 @@
       const [index, setIndex] = React.useState("");
       const [obesity, setObesity] = React.useState("");
       const [obesityText, setObesityText] = React.useState();
+      const [weight, setWeight] = React.useState();
 
-      const onObesity = (event) => {
+      const onHeight = (event) => {
         setHeight(event.target.value);
       };
       const handleSex = (event) => {
         // console.log(event.target.value);
         setIndex(event.target.value);
       };
+      const onWeight = (event) => {
+        setWeight(event.target.value);
+      };
+      function handleObesity() {
+        if (index === "1") {
+          if ((weight / ((height / 100) ** 2 * 21)) * 100 < 90) {
+            setObesityText((obesityText) => "당신은 저체중입니다.");
+          } else if (
+            (weight / ((height / 100) ** 2 * 21)) * 100 >= 90 &&
+            (weight / ((height / 100) ** 2 * 21)) * 100 < 110
+          ) {
+            setObesityText((obesityText) => "당신은 정상 체중입니다.");
+          } else if (
+            (weight / ((height / 100) ** 2 * 21)) * 100 >= 110 &&
+            (weight / ((height / 100) ** 2 * 21)) * 100 < 120
+          ) {
+            setObesityText((obesityText) => "당신은 과체중입니다.");
+          } else if (
+            (weight / ((height / 100) ** 2 * 21)) * 100 >= 120 &&
+            (weight / ((height / 100) ** 2 * 21)) * 100 < 130
+          ) {
+            setObesityText((obesityText) => "당신은 경도 비만입니다.");
+          } else if (
+            (weight / ((height / 100) ** 2 * 21)) * 100 >= 130 &&
+            (weight / ((height / 100) ** 2 * 21)) * 100 < 160
+          ) {
+            setObesityText((obesityText) => "당신은 중정도 비만입니다.");
+          } else {
+            setObesityText((obesityText) => "당신은 고도 비만입니다.");
+          }
+        } else {
+          if ((weight / ((height / 100) ** 2 * 22)) * 100 < 90) {
+            setObesityText((obesityText) => "당신은 저체중입니다.");
+          } else if (
+            (weight / ((height / 100) ** 2 * 22)) * 100 >= 90 &&
+            (weight / ((height / 100) ** 2 * 22)) * 100 < 110
+          ) {
+            setObesityText((obesityText) => "당신은 정상 체중입니다.");
+          } else if (
+            (weight / ((height / 100) ** 2 * 22)) * 100 >= 110 &&
+            (weight / ((height / 100) ** 2 * 22)) * 100 < 120
+          ) {
+            setObesityText((obesityText) => "당신은 과체중입니다.");
+          } else if (
+            (weight / ((height / 100) ** 2 * 22)) * 100 >= 120 &&
+            (weight / ((height / 100) ** 2 * 22)) * 100 < 130
+          ) {
+            setObesityText((obesityText) => "당신은 경도 비만입니다.");
+          } else if (
+            (weight / ((height / 100) ** 2 * 22)) * 100 >= 130 &&
+            (weight / ((height / 100) ** 2 * 22)) * 100 < 160
+          ) {
+            setObesityText((obesityText) => "당신은 중정도 비만입니다.");
+          } else {
+            setObesityText((obesityText) => "당신은 고도 비만입니다.");
+          }
+        }
+      }
 
       return (
         <div>
@@ -132,7 +191,7 @@
               type="number"
               id="height"
               placeholder="Write your Height (cm)."
-              onChange={onObesity}
+              onChange={onHeight}
             />
           </div>
           <div>
@@ -142,6 +201,7 @@
               name="gender"
               value="0"
               onClick={handleSex}
+              checked={index === "0" || index === ""}
             />
             <label for="man">Man</label>
             <input
@@ -159,16 +219,26 @@
                 type="number"
                 value={
                   index === "1"
-                    ? (((height / 100) * height) / 100) * 21
-                    : (((height / 100) * height) / 100) * 22
+                    ? (height / 100) ** 2 * 21
+                    : (height / 100) ** 2 * 22
                 }
+                id="woman"
                 disabled
               />
             </div>
           </div>
           <div>
-            <label for="obesity">Your Obesity :</label>
-            <input type="number" disabled />
+            <label for="weight">Your Weight : </label>
+            <input
+              type="number"
+              id="weight"
+              placeholder="Write your Weight (kg)."
+              onChange={onWeight}
+            />
+          </div>
+          <div>
+            <h2>Your Obesity : {obesityText}</h2>
+            <button onClick={handleObesity}>Submit</button>
           </div>
         </div>
       );
